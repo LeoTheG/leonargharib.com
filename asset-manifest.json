@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "https://leonargharib.com/static/css/main.d9715314.chunk.css",
+    "main.js": "https://leonargharib.com/static/js/main.f169e9e3.chunk.js",
+    "main.js.map": "https://leonargharib.com/static/js/main.f169e9e3.chunk.js.map",
+    "runtime-main.js": "https://leonargharib.com/static/js/runtime-main.f665f0be.js",
+    "runtime-main.js.map": "https://leonargharib.com/static/js/runtime-main.f665f0be.js.map",
+    "static/js/2.0142a414.chunk.js": "https://leonargharib.com/static/js/2.0142a414.chunk.js",
+    "static/js/2.0142a414.chunk.js.map": "https://leonargharib.com/static/js/2.0142a414.chunk.js.map",
+    "static/js/3.e344910b.chunk.js": "https://leonargharib.com/static/js/3.e344910b.chunk.js",
+    "static/js/3.e344910b.chunk.js.map": "https://leonargharib.com/static/js/3.e344910b.chunk.js.map",
+    "index.html": "https://leonargharib.com/index.html",
+    "static/css/main.d9715314.chunk.css.map": "https://leonargharib.com/static/css/main.d9715314.chunk.css.map",
+    "static/js/2.0142a414.chunk.js.LICENSE.txt": "https://leonargharib.com/static/js/2.0142a414.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f665f0be.js",
+    "static/js/2.0142a414.chunk.js",
+    "static/css/main.d9715314.chunk.css",
+    "static/js/main.f169e9e3.chunk.js"
+  ]
+}
