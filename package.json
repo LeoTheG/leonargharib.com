@@ -1,0 +1,14 @@
+{
+  "name": "leonargharib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd client && npm install",
+    "build": "PUBLIC_URL=https://leonargharib.com npm run build --prefix client",
+    "deploy:heroku": "git subtree push --prefix server heroku master"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
