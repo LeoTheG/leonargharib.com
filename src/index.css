@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Franklin Gothic";
+  src: local("assets/Franklin Gothic Regular.ttf");
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
