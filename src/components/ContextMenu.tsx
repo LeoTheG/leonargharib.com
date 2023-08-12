@@ -9,7 +9,7 @@ export const ContextMenu = ({
 }) => {
   return (
     <div
-      className="px-3 py-[2px] bg-white z-[1000] absolute flex-col"
+      className="px-[4px] py-[2px] bg-white z-[1000] absolute flex-col"
       style={{
         top: contextMenuPosition.top,
         left: contextMenuPosition.left,
@@ -20,12 +20,11 @@ export const ContextMenu = ({
       {contextMenuItems.map((item) => (
         <div
           key={item.label}
-          className={clsx(
-            "p-0 m-0 hover:bg-gray-200 cursor-pointer text-sm",
-            item.isBold && "font-bold",
-          )}
+          className={clsx("p-0 m-0 text-sm", item.isBold && "font-bold")}
         >
-          {item.label}
+          <div className="px-3 w-[150px] hover:bg-primary hover:text-white">
+            <span className="select-none">{item.label}</span>
+          </div>
           {item.hasSeparatorAfter && (
             <div className="my-1 border-b border-gray-400" />
           )}

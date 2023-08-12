@@ -7,8 +7,11 @@ export const StartButton = () => {
       className={clsx(
         "h-full bg-[#54ae4c] text-white flex justify-between",
         "items-center gap-1 pl-2 pr-6 rounded-r-xl rounded-l-md",
-        "hover:bg-[#54ae4c]/90",
+        "hover:brightness-[1.1]",
       )}
+      style={{
+        boxShadow: "inset 0px 0px 2px 0 rgba(255,255,255,0.8)",
+      }}
     >
       <img
         src={windowsXpIconImg}

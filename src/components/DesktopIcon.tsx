@@ -65,7 +65,8 @@ const DesktopIconWithoutContextMenu = ({
           className="p-[0 1px] text-xs text-white"
           style={{
             textShadow: "black 0px 0px 5px",
-            background: isDragging || isSelected ? "#316AC5" : "transparent",
+            background:
+              isDragging || isSelected ? "hsl(var(--primary))" : "transparent",
           }}
         >
           {title}
