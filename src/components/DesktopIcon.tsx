@@ -1,6 +1,9 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useDrag } from "react-dnd";
-import { ContextMenu } from "components/ContextMenu";
+import {
+  ContextMenu,
+  contextMenuItemsDesktopIcon,
+} from "components/ContextMenu";
 
 interface IDesktopIconProps {
   img: string;
@@ -61,7 +64,7 @@ const DesktopIconWithoutContextMenu = ({
           }}
         />
         <div
-          className="p-[0 1px] text-xs text-white text-center max-w-[100px] flex"
+          className="p-[0 1px] text-xs text-white text-center max-w-[90px] flex"
           style={{
             textShadow: "black 0px 0px 5px",
             background:
@@ -75,6 +78,7 @@ const DesktopIconWithoutContextMenu = ({
       <ContextMenu
         isContextMenuOpen={isContextMenuOpen}
         contextMenuPosition={contextMenuPosition}
+        contextMenuItems={contextMenuItemsDesktopIcon}
       />
     </>
   );

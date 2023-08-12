@@ -1,9 +1,11 @@
 import clsx from "clsx";
 
 export const ContextMenu = ({
+  contextMenuItems,
   isContextMenuOpen,
   contextMenuPosition,
 }: {
+  contextMenuItems: IContextMenuItem[];
   isContextMenuOpen: boolean;
   contextMenuPosition: { top: number; left: number };
 }) => {
@@ -34,7 +36,39 @@ export const ContextMenu = ({
   );
 };
 
-const contextMenuItems = [
+interface IContextMenuItem {
+  label: string;
+  isBold?: boolean;
+  hasSeparatorAfter?: boolean;
+}
+
+export const contextMenuItemsDesktop: IContextMenuItem[] = [
+  {
+    label: "Arrange Icons By",
+  },
+  {
+    label: "Refresh",
+    hasSeparatorAfter: true,
+  },
+  {
+    label: "Paste",
+  },
+  {
+    label: "Paste Shortcut",
+  },
+  {
+    // TODO undo...
+    label: "Undo",
+  },
+  {
+    label: "New",
+  },
+  {
+    label: "Properties",
+  },
+];
+
+export const contextMenuItemsDesktopIcon: IContextMenuItem[] = [
   {
     label: "Open",
     isBold: true,

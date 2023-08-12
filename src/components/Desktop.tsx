@@ -1,5 +1,11 @@
 import { XYCoord, useDrop } from "react-dnd";
-import React, { PropsWithChildren, useCallback, useState } from "react";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import imgIconMyComputer from "assets/icons/MyComputer.png";
 import imgIconRecycle from "assets/icons/RecycleBin.png";
@@ -7,7 +13,7 @@ import imgIconMyDocuments from "assets/icons/Documents.png";
 import imgIconNotepad from "assets/icons/Notepad.png";
 import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
 import { DesktopIcon } from "components/DesktopIcon";
-// import imgIconFolder from "assets/icons/Folder.png";
+import { ContextMenu, contextMenuItemsDesktop } from "./ContextMenu";
 
 const initialDesktopIcons = [
   {
@@ -37,7 +43,7 @@ const initialDesktopIcons = [
   {
     img: imgIconInternetExplorer,
     title: "Internet Explorer",
-    position: { top: 100, left: 100 },
+    position: { top: 100, left: 80 },
     id: "internet-explorer",
   },
 ];
@@ -67,6 +73,25 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     [setDesktopIcons],
   );
 
+  useEffect(() => {
+    const onClickOutside = (target: any) => {
+      setIsMenuOpen(false);
+    };
+    const handleClickOutside = (event: any) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        console.log("CLICKED OUTSIDE");
+        onClickOutside(event.target);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener("contextmenu", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener("contextmenu", handleClickOutside, true);
+    };
+  }, []);
+
   const [, drop] = useDrop(
     () => ({
       accept: "desktop-icon",
@@ -81,8 +106,23 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     [moveIcon],
   );
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const ref = useRef<any>(null);
+  const [contextMenuPosition, setContextMenuPosition] = useState({
+    left: 0,
+    top: 0,
+  });
+
   return (
-    <div ref={drop} className="flex-1 w-full h-full">
+    <div
+      ref={drop}
+      className="flex-1 w-full h-full"
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setIsMenuOpen(true);
+        setContextMenuPosition({ left: e.clientX, top: e.clientY });
+      }}
+    >
       {Object.keys(desktopIcons).map((key) => {
         const icon = desktopIcons[key];
         return (
@@ -95,6 +135,12 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
           />
         );
       })}
+
+      {/* <ContextMenu
+        isContextMenuOpen={isMenuOpen}
+        contextMenuPosition={contextMenuPosition}
+        contextMenuItems={contextMenuItemsDesktop}
+      /> */}
     </div>
   );
 };

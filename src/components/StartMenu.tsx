@@ -31,20 +31,20 @@ export const StartMenu = ({
 }) => {
   const ref = useRef<any>(null);
 
-  const handleClickOutside = (event: any) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      onClickOutside(event.target);
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClickOutside(event.target);
+      }
+    };
+
     document.addEventListener("click", handleClickOutside, true);
     document.addEventListener("contextmenu", handleClickOutside, true);
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
       document.removeEventListener("contextmenu", handleClickOutside, true);
     };
-  }, []);
+  }, [onClickOutside]);
 
   return (
     <div
@@ -78,7 +78,7 @@ export const StartMenu = ({
       <div className="flex w-full h-full overflow-y-hidden">
         <div className="flex flex-col items-center w-[50%] h-full bg-white gap-1 pt-2">
           {leftSideIcons.map((item) => (
-            <StartMenuIcon item={item} />
+            <StartMenuIcon key={item.label} item={item} />
           ))}
 
           <div className="flex flex-col items-center justify-end flex-1 w-full px-2 pb-2">
@@ -92,7 +92,7 @@ export const StartMenu = ({
 
         <div className="flex flex-col items-center w-[50%] h-full bg-[#D3E5FA] gap-1 pt-2 ">
           {rightSideIcons.map((item) => (
-            <StartMenuIcon item={item} />
+            <StartMenuIcon key={item.label} item={item} />
           ))}
         </div>
       </div>
