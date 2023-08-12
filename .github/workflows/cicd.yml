@@ -1,57 +1,27 @@
-name: Build & deploy
+name: github pages ci cd
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - master
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Installing Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.x
-
-      - name: Installing NPM packages
-        run: npm ci
-
-      - name: Building project
-        run: npm run build
-
-      #   - name: Running tests
-      #     run: npm run test
-
-      - name: Uploading production-ready build files
-        uses: actions/upload-artifact@v2
-        with:
-          name: production-files
-          path: ./build
-
   deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    name: deploy
+    runs-on: ubuntu-18.04
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Downloading artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: production-files
-          path: ./build
+      - uses: actions/checkout@v2
 
-      - name: Deploying to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+      - run: npm install
+
+      - run: npm run build
+
+      - name: deploy
+        uses: crazy-max/ghaction-github-pages@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          target_branch: gh-pages
+          build_dir: build
