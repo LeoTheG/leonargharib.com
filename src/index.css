@@ -9,6 +9,11 @@
   src: local("assets/Franklin Gothic Regular.ttf");
 }
 
+@font-face {
+  font-family: "Tahoma";
+  src: local("assets/Tahoma Regular font.ttf");
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
