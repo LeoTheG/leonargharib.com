@@ -15,7 +15,14 @@ export const StartButton = () => {
         alt="Windows XP Icon"
         className="w-auto h-[24px]"
       />
-      <span className="font-['Franklin Gothic'] font-bold italic">start</span>
+      <span
+        className="font-['Franklin Gothic'] font-bold italic"
+        style={{
+          textShadow: "black 0px 0px 5px",
+        }}
+      >
+        start
+      </span>
     </button>
   );
 };
