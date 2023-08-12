@@ -44,7 +44,6 @@ const DesktopIconWithoutContextMenu = ({
           left,
           top,
           transform: "translate(0,0)",
-          cursor: "default",
         }}
         onClick={(e) => {
           onClicked();

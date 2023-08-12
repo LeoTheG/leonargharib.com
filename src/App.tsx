@@ -1,5 +1,5 @@
 import "./App.css";
-import backgroundImg from "assets/icons/xp_background.jpg";
+import backgroundImg from "assets/xp_background.jpg";
 import clsx from "clsx";
 import { Desktop } from "components/Desktop";
 import { Taskbar } from "components/Taskbar";

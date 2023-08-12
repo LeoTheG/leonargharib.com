@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body * {
+  cursor: default!important;
+}
+
 @font-face {
   font-family: "Franklin Gothic";
   src: local("assets/Franklin Gothic Regular.ttf");
