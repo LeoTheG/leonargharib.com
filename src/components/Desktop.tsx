@@ -1,10 +1,5 @@
-import { XYCoord, useDrag, useDrop } from "react-dnd";
-import React, {
-  CSSProperties,
-  PropsWithChildren,
-  useCallback,
-  useState,
-} from "react";
+import { XYCoord, useDrop } from "react-dnd";
+import React, { PropsWithChildren, useCallback, useState } from "react";
 
 import imgIconMyComputer from "assets/icons/MyComputer.png";
 import imgIconRecycle from "assets/icons/RecycleBin.png";
