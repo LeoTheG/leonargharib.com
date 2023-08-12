@@ -13,7 +13,7 @@ import imgIconMyDocuments from "assets/icons/Documents.png";
 import imgIconNotepad from "assets/icons/Notepad.png";
 import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
 import { DesktopIcon } from "components/DesktopIcon";
-import { ContextMenu, contextMenuItemsDesktop } from "./ContextMenu";
+// import { ContextMenu, contextMenuItemsDesktop } from "./ContextMenu";
 
 const initialDesktopIcons = [
   {
@@ -75,7 +75,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
   useEffect(() => {
     const onClickOutside = (target: any) => {
-      setIsMenuOpen(false);
+      // setIsMenuOpen(false);
     };
     const handleClickOutside = (event: any) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -106,12 +106,12 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     [moveIcon],
   );
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const ref = useRef<any>(null);
-  const [contextMenuPosition, setContextMenuPosition] = useState({
-    left: 0,
-    top: 0,
-  });
+  // const [contextMenuPosition, setContextMenuPosition] = useState({
+  //   left: 0,
+  //   top: 0,
+  // });
 
   return (
     <div
@@ -119,8 +119,8 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       className="flex-1 w-full h-full"
       onContextMenu={(e) => {
         e.preventDefault();
-        setIsMenuOpen(true);
-        setContextMenuPosition({ left: e.clientX, top: e.clientY });
+        // setIsMenuOpen(true);
+        // setContextMenuPosition({ left: e.clientX, top: e.clientY });
       }}
     >
       {Object.keys(desktopIcons).map((key) => {
