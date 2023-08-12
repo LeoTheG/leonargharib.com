@@ -3,7 +3,7 @@ name: github pages ci cd
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
