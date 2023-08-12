@@ -61,8 +61,8 @@ const DesktopIconWithoutContextMenu = ({
             userSelect: "none",
           }}
         />
-        <span
-          className="p-[0 1px] text-xs text-white"
+        <div
+          className="p-[0 1px] text-xs text-white text-center max-w-[100px] flex"
           style={{
             textShadow: "black 0px 0px 5px",
             background:
@@ -70,7 +70,7 @@ const DesktopIconWithoutContextMenu = ({
           }}
         >
           {title}
-        </span>
+        </div>
       </div>
 
       <ContextMenu

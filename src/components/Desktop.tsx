@@ -5,6 +5,7 @@ import imgIconMyComputer from "assets/icons/MyComputer.png";
 import imgIconRecycle from "assets/icons/RecycleBin.png";
 import imgIconMyDocuments from "assets/icons/Documents.png";
 import imgIconNotepad from "assets/icons/Notepad.png";
+import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
 import { DesktopIcon } from "components/DesktopIcon";
 // import imgIconFolder from "assets/icons/Folder.png";
 
@@ -32,6 +33,12 @@ const initialDesktopIcons = [
     title: "Notepad",
     position: { top: 10, left: 100 },
     id: "notepad",
+  },
+  {
+    img: imgIconInternetExplorer,
+    title: "Internet Explorer",
+    position: { top: 100, left: 100 },
+    id: "internet-explorer",
   },
 ];
 
