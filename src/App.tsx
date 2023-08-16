@@ -8,7 +8,7 @@ function App() {
   return (
     <div
       className={clsx(
-        "min-h-screen w-full flex items-center gap-4 flex-col justify-between max-h-screen h-screen",
+        "min-h-screen w-full flex items-center gap-4 flex-col justify-between max-h-screen h-screen select-none",
       )}
       style={{
         backgroundImage: `url(${backgroundImg})`,
