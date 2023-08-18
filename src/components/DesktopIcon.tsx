@@ -55,6 +55,12 @@ const DesktopIconWithoutContextMenu = ({
           transform: "translate(0,0)",
         }}
         onClick={(e) => {
+          if (window.innerWidth < 700) {
+            if (onContextMenu) {
+              onContextMenu(e);
+              return;
+            }
+          }
           if (e.detail === 1) {
             onClicked();
           } else if (onDoubleClicked) {

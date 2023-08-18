@@ -28,9 +28,15 @@ export const PDFReader = ({
     [id, left, top],
   );
 
+  const DownloadButton = (
+    <a href="/Leonar Gharib Resume.pdf" download className="text-white">
+      Download
+    </a>
+  );
+
   return (
     <div
-      className="flex flex-col w-[900px] max-w-[calc(100%-25px)] h-[783px] max-h-[calc(100%-25px)] border-2 border-blue-700 border-solid rounded-tr-lg rounded-tl-lg "
+      className="flex flex-col w-[900px] max-w-[calc(100%-25px)] h-[510px] md:h-[783px] max-h-[calc(100%-25px)] border-2 border-blue-700 border-solid rounded-tr-lg rounded-tl-lg "
       style={{
         ...dragStyle,
         left,
@@ -72,9 +78,7 @@ export const PDFReader = ({
       >
         <div className="overflow-y-auto bg-[#565656] h-full flex flex-col items-center">
           <img src={imgResume} className="w-[800px]" alt="resume" />
-          <a href="/Leonar Gharib Resume.pdf" download className="text-white">
-            Download
-          </a>
+          {DownloadButton}
         </div>
       </object>
     </div>

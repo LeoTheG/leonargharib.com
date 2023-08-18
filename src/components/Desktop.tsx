@@ -57,7 +57,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const contextMenuRef = useRef<HTMLDivElement>(null);
   const [pdfReaderPosition, setPdfReaderPosition] = useState({
     top: 10,
-    left: 130,
+    left: window?.innerWidth < 600 ? 10 : 130,
   });
 
   const [desktopIcons, setDesktopIcons] = useState(
