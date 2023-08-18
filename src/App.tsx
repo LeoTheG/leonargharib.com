@@ -50,13 +50,12 @@ function App() {
     >
       <div
         className={clsx(
-          "min-h-screen w-full flex items-center gap-4 flex-col justify-between max-h-screen h-screen select-none overflow-hidden max-w-[100vw]",
+          "w-full flex items-center gap-4 flex-col justify-between select-none overflow-hidden max-w-[100vw] h-[-webkit-fill-available] h-full",
         )}
         style={{
           backgroundImage: `url(${backgroundImg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "-webkit-fill-available",
         }}
       >
         <Desktop />

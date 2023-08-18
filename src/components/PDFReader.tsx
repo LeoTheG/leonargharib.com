@@ -38,7 +38,9 @@ export const PDFReader = ({ window: windowProp, onClick }: IPDFReaderProps) => {
           type="application/pdf"
           width="100%"
           height="100%"
-        ></object>
+        >
+          {ImgResumeWithDownload}
+        </object>
       )}
     </ApplicationWindow>
   );
