@@ -6,12 +6,14 @@ import imgIconRecycle from "assets/icons/RecycleBin.png";
 import imgIconMyDocuments from "assets/icons/Documents.png";
 import imgIconTextDocument from "assets/icons/TextDocument.png";
 import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
+import imgIconImage from "assets/icons/Image.png";
 import imgPDF from "assets/icons/PDF.png";
 import { DesktopIcon } from "components/DesktopIcon";
 import { ContextMenu, contextMenuItemsDesktop } from "components/ContextMenu";
 import { useAppContext } from "App";
 import { TextDocument } from "components/TextDocument";
 import { PDFReader } from "components/PDFReader";
+import { ImageApplication } from "./Image";
 
 const initialDesktopIcons = [
   {
@@ -50,12 +52,19 @@ const initialDesktopIcons = [
     position: { top: 190, left: 100 },
     id: "resume",
   },
+  {
+    img: imgIconImage,
+    title: "deeno",
+    position: { top: 280, left: 10 },
+    id: "picture",
+  },
 ];
 
 export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { windows, setWindows } = useAppContext();
   const pdfReader = windows["resume"];
   const textDocument = windows["text-document"];
+  const picture = windows["picture"];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({
@@ -112,7 +121,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         const top = Math.round(item.top + delta.y);
         if (item.isDesktopIcon) {
           moveIcon(item.id, left, top);
-        } else if (["resume", "text-document"].includes(item.id)) {
+        } else if (isValidId(item.id)) {
           moveWindow(item.id, left, top);
         }
         return undefined;
@@ -141,7 +150,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         onClickContextMenuItem={(label) => {
           setIsMenuOpen(false);
           if (label === "Open") {
-            if (!["resume", "text-document"].includes(key)) return;
+            if (!isValidId(key)) return;
             setWindows({
               ...windows,
               [key]: {
@@ -158,7 +167,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         position={icon.position}
         onDoubleClicked={() => {
           // only handling certain apps for now
-          if (!["resume", "text-document"].includes(key)) return;
+          if (!isValidId(key)) return;
 
           setWindows({
             ...windows,
@@ -211,6 +220,16 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
             onClick={(arg: any) => handleClickWindow(textDocument.id, arg)}
           />
         )}
+
+      {picture.status !== "Close" && picture.status !== "Minimize" && (
+        <ImageApplication
+          window={picture}
+          onClick={(arg: any) => handleClickWindow(picture.id, arg)}
+        />
+      )}
     </div>
   );
 };
+
+const isValidId = (id: string) =>
+  ["resume", "text-document", "picture"].includes(id);

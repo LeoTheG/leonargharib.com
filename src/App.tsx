@@ -5,6 +5,7 @@ import { Taskbar } from "components/Taskbar";
 import { createContext, useContext, useState } from "react";
 import imgPDF from "assets/icons/PDF.png";
 import imgIconTextDocument from "assets/icons/TextDocument.png";
+import imgIconImage from "assets/icons/Image.png";
 import { IWindow } from "components/TaskbarWindow";
 
 const AppContext = createContext<{
@@ -37,6 +38,13 @@ function App() {
       title: "important notes (dont forget)",
       position: { top: 20, left: 20 },
       img: imgIconTextDocument,
+      status: "Close",
+    },
+    picture: {
+      id: "picture",
+      title: "deeno",
+      position: { top: 20, left: 20 },
+      img: imgIconImage,
       status: "Close",
     },
   });

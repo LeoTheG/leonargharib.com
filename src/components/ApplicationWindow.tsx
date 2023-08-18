@@ -34,8 +34,8 @@ export const ApplicationWindow: React.FC<
       className={clsx(
         className,
         "flex flex-col max-w-[calc(100%-25px)]",
-        "max-h-[calc(100%-25px)] border-2 border-blue-700",
-        "border-solid rounded-tr-lg rounded-tl-lg absolute cursor-move",
+        "max-h-[calc(100%-25px)] border-4 border-blue-700",
+        "border-solid rounded-tr-xl rounded-tl-xl absolute cursor-move",
       )}
       style={{
         left,
