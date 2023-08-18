@@ -6,6 +6,7 @@ interface IContextMenuProps {
   isContextMenuOpen: boolean;
   contextMenuPosition: { top: number; left: number };
   onClickOutside?: () => void;
+  onClickItem?: (item: IContextMenuItem) => void;
 }
 
 export const ContextMenu = forwardRef<HTMLDivElement | null, IContextMenuProps>(
@@ -42,10 +43,6 @@ export const ContextMenu = forwardRef<HTMLDivElement | null, IContextMenuProps>(
           display: isContextMenuOpen ? "flex" : "none",
           boxShadow: "3px 3px 3px 0 rgba(0,0,0,0.8)",
         }}
-        onClick={(e) => {
-          e.stopPropagation();
-          console.log("aa");
-        }}
         ref={ref}
       >
         {contextMenuItems.map((item) => (
@@ -53,6 +50,7 @@ export const ContextMenu = forwardRef<HTMLDivElement | null, IContextMenuProps>(
             key={item.label}
             className={clsx("p-0 m-0 text-sm", item.isBold && "font-bold")}
             onClick={(e) => {
+              if (props.onClickItem) props.onClickItem(item);
               e.stopPropagation();
               e.preventDefault();
             }}

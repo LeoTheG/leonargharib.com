@@ -4,8 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  overflow: hidden;
+}
+
 body * {
   cursor: default!important;
+  font-family: "Tahoma", sans-serif;
 }
 
 @font-face {

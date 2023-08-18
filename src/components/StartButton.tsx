@@ -19,7 +19,6 @@ export const StartButton = () => {
           backgroundColor: isMenuOpen ? "#188B18" : undefined,
         }}
         onClick={() => {
-          console.log("clicked start button");
           setIsMenuOpen(!isMenuOpen);
         }}
       >
@@ -29,9 +28,10 @@ export const StartButton = () => {
           className="w-auto h-[20px]"
         />
         <span
-          className="font-['Franklin Gothic'] font-bold italic"
+          className="font-bold italic tracking-wider text-lg"
           style={{
             textShadow: "black 0px 0px 5px",
+            fontFamily: "Franklin Gothic",
           }}
         >
           start

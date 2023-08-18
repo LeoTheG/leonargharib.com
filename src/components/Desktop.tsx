@@ -6,8 +6,10 @@ import imgIconRecycle from "assets/icons/RecycleBin.png";
 import imgIconMyDocuments from "assets/icons/Documents.png";
 import imgIconNotepad from "assets/icons/Notepad.png";
 import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
+import imgPDF from "assets/icons/PDF.png";
 import { DesktopIcon } from "components/DesktopIcon";
 import { ContextMenu, contextMenuItemsDesktop } from "./ContextMenu";
+import { PDFReader } from "./PDFReader";
 
 const initialDesktopIcons = [
   {
@@ -37,13 +39,26 @@ const initialDesktopIcons = [
   {
     img: imgIconInternetExplorer,
     title: "Internet Explorer",
-    position: { top: 100, left: 80 },
+    position: { top: 100, left: 100 },
     id: "internet-explorer",
+  },
+  {
+    img: imgPDF,
+    title: "My Resume",
+    position: { top: 190, left: 100 },
+    id: "resume",
   },
 ];
 
 export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+  const [pdfReaderStatus, setPdfReaderStatus] = useState<
+    "Minimize" | "Maximize" | "Close" | "Normal"
+  >("Normal");
   const contextMenuRef = useRef<HTMLDivElement>(null);
+  const [pdfReaderPosition, setPdfReaderPosition] = useState({
+    top: 10,
+    left: 130,
+  });
 
   const [desktopIcons, setDesktopIcons] = useState(
     initialDesktopIcons.reduce<{
@@ -69,14 +84,25 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     [setDesktopIcons],
   );
 
+  const movePdfReader = useCallback(
+    (left: number, top: number) => {
+      setPdfReaderPosition({ left, top });
+    },
+    [setPdfReaderPosition],
+  );
+
   const [, drop] = useDrop(
     () => ({
-      accept: "desktop-icon",
+      accept: ["desktop-icon", "application"],
       drop(item: any, monitor) {
         const delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
         const left = Math.round(item.left + delta.x);
         const top = Math.round(item.top + delta.y);
-        moveIcon(item.id, left, top);
+        if (item.id === "pdf-reader") {
+          movePdfReader(left, top);
+        } else {
+          moveIcon(item.id, left, top);
+        }
         return undefined;
       },
     }),
@@ -84,11 +110,14 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   );
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const ref = useRef<any>(null);
   const [contextMenuPosition, setContextMenuPosition] = useState({
     left: 0,
     top: 0,
   });
+
+  const handleClickPDFReader = (button: "Minimize" | "Maximize" | "Close") => {
+    setPdfReaderStatus(button);
+  };
 
   return (
     <div
@@ -96,7 +125,6 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
       className="flex-1 w-full h-full"
       id="desktop"
       onContextMenu={(e) => {
-        console.log(e.target);
         e.preventDefault();
         //@ts-ignore
         if (e.target.id !== "desktop") return;
@@ -108,11 +136,24 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         const icon = desktopIcons[key];
         return (
           <DesktopIcon
+            onClickContextMenuItem={(label) => {
+              setIsMenuOpen(false);
+              if (label === "Open") {
+                if (key === "resume") {
+                  setPdfReaderStatus("Normal");
+                }
+              }
+            }}
             key={key}
             id={key}
             img={icon.img}
             title={icon.title}
             position={icon.position}
+            onDoubleClicked={() => {
+              if (key === "resume") {
+                setPdfReaderStatus("Normal");
+              }
+            }}
           />
         );
       })}
@@ -126,6 +167,14 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
           setIsMenuOpen(false);
         }}
       />
+
+      {pdfReaderStatus !== "Close" && (
+        <PDFReader
+          position={pdfReaderPosition}
+          id="pdf-reader"
+          onClick={handleClickPDFReader}
+        />
+      )}
     </div>
   );
 };

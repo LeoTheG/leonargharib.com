@@ -14,6 +14,9 @@ interface IDesktopIconProps {
   onClicked: () => void;
   isContextMenuOpen: boolean;
   contextMenuPosition: { top: number; left: number };
+  onContextMenu?: (e: any) => void;
+  onDoubleClicked?: () => void;
+  onClickContextMenuItem: (item: any) => void;
 }
 
 const DesktopIconWithoutContextMenu = ({
@@ -25,6 +28,9 @@ const DesktopIconWithoutContextMenu = ({
   onClicked,
   isContextMenuOpen,
   contextMenuPosition,
+  onContextMenu,
+  onDoubleClicked,
+  onClickContextMenuItem,
 }: IDesktopIconProps) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -40,7 +46,7 @@ const DesktopIconWithoutContextMenu = ({
   return (
     <>
       <div
-        className="flex flex-col items-center gap-1"
+        className="flex flex-col items-center gap-1 w-[100px] overflow-x-hidden"
         ref={drag}
         style={{
           ...dragStyle,
@@ -49,10 +55,15 @@ const DesktopIconWithoutContextMenu = ({
           transform: "translate(0,0)",
         }}
         onClick={(e) => {
-          onClicked();
+          if (e.detail === 1) {
+            onClicked();
+          } else if (onDoubleClicked) {
+            onDoubleClicked();
+          }
           e.stopPropagation();
           e.preventDefault();
         }}
+        onContextMenu={onContextMenu}
       >
         <img
           src={img}
@@ -79,6 +90,7 @@ const DesktopIconWithoutContextMenu = ({
         isContextMenuOpen={isContextMenuOpen}
         contextMenuPosition={contextMenuPosition}
         contextMenuItems={contextMenuItemsDesktopIcon}
+        onClickItem={onClickContextMenuItem}
       />
     </>
   );
@@ -125,15 +137,7 @@ export const DesktopIcon = (
   }, []);
 
   return (
-    <div
-      ref={ref}
-      onContextMenu={(e) => {
-        e.preventDefault();
-        setIsSelected(true);
-        setIsMenuOpen(true);
-        setContextMenuPosition({ left: e.clientX, top: e.clientY });
-      }}
-    >
+    <div ref={ref}>
       <DesktopIconWithoutContextMenu
         {...props}
         isSelected={isSelected}
@@ -142,6 +146,16 @@ export const DesktopIcon = (
         }}
         isContextMenuOpen={isMenuOpen}
         contextMenuPosition={contextMenuPosition}
+        onClickContextMenuItem={(item) => {
+          props.onClickContextMenuItem(item.label);
+          setIsMenuOpen(false);
+        }}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          setIsSelected(true);
+          setIsMenuOpen(true);
+          setContextMenuPosition({ left: e.clientX, top: e.clientY });
+        }}
       />
     </div>
   );
