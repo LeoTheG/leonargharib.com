@@ -20,7 +20,11 @@ export const ImageApplication = ({
       className="w-[300px] md:w-[500px] h-[400px] md:h-[500px] overflow-y-hidden"
     >
       <div className="bg-white pl-1 pt-1 overflow-y-auto flex justify-center">
-        <img src={imgDeeno} className="h-[400px] md:h-[500px] w-auto" />
+        <img
+          src={imgDeeno}
+          className="h-[400px] md:h-[500px] w-auto"
+          alt="dog"
+        />
       </div>
     </ApplicationWindow>
   );
