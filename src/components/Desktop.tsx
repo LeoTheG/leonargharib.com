@@ -141,15 +141,14 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         onClickContextMenuItem={(label) => {
           setIsMenuOpen(false);
           if (label === "Open") {
-            if (key === "resume") {
-              setWindows({
-                ...windows,
-                resume: {
-                  ...pdfReader,
-                  status: "Normal",
-                },
-              });
-            }
+            if (!["resume", "text-document"].includes(key)) return;
+            setWindows({
+              ...windows,
+              [key]: {
+                ...windows[key],
+                status: "Normal",
+              },
+            });
           }
         }}
         key={key}
