@@ -4,12 +4,13 @@ import React, { PropsWithChildren, useCallback, useRef, useState } from "react";
 import imgIconMyComputer from "assets/icons/MyComputer.png";
 import imgIconRecycle from "assets/icons/RecycleBin.png";
 import imgIconMyDocuments from "assets/icons/Documents.png";
-import imgIconNotepad from "assets/icons/Notepad.png";
+import imgIconTextDocument from "assets/icons/TextDocument.png";
 import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
 import imgPDF from "assets/icons/PDF.png";
 import { DesktopIcon } from "components/DesktopIcon";
 import { ContextMenu, contextMenuItemsDesktop } from "./ContextMenu";
 import { PDFReader } from "./PDFReader";
+import { useAppContext } from "App";
 
 const initialDesktopIcons = [
   {
@@ -31,10 +32,10 @@ const initialDesktopIcons = [
     id: "recycle-bin",
   },
   {
-    img: imgIconNotepad,
-    title: "Notepad",
+    img: imgIconTextDocument,
+    title: "important notes (dont forget)",
     position: { top: 10, left: 100 },
-    id: "notepad",
+    id: "text-document",
   },
   {
     img: imgIconInternetExplorer,
@@ -51,14 +52,15 @@ const initialDesktopIcons = [
 ];
 
 export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [pdfReaderStatus, setPdfReaderStatus] = useState<
-    "Minimize" | "Maximize" | "Close" | "Normal"
-  >("Normal");
-  const contextMenuRef = useRef<HTMLDivElement>(null);
-  const [pdfReaderPosition, setPdfReaderPosition] = useState({
-    top: 10,
-    left: window?.innerWidth < 600 ? 10 : 130,
+  const { windows, setWindows } = useAppContext();
+  const pdfReader = windows["resume"];
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [contextMenuPosition, setContextMenuPosition] = useState({
+    left: 0,
+    top: 0,
   });
+  const contextMenuRef = useRef<HTMLDivElement>(null);
 
   const [desktopIcons, setDesktopIcons] = useState(
     initialDesktopIcons.reduce<{
@@ -84,11 +86,19 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     [setDesktopIcons],
   );
 
-  const movePdfReader = useCallback(
-    (left: number, top: number) => {
-      setPdfReaderPosition({ left, top });
+  const moveWindow = useCallback(
+    (id: string, left: number, top: number) => {
+      setWindows((windows) => {
+        return {
+          ...windows,
+          [id]: {
+            ...windows[id],
+            position: { left, top },
+          },
+        };
+      });
     },
-    [setPdfReaderPosition],
+    [setWindows],
   );
 
   const [, drop] = useDrop(
@@ -99,7 +109,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         const left = Math.round(item.left + delta.x);
         const top = Math.round(item.top + delta.y);
         if (item.id === "pdf-reader") {
-          movePdfReader(left, top);
+          moveWindow(item.id, left, top);
         } else {
           moveIcon(item.id, left, top);
         }
@@ -109,15 +119,56 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     [moveIcon],
   );
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [contextMenuPosition, setContextMenuPosition] = useState({
-    left: 0,
-    top: 0,
-  });
-
-  const handleClickPDFReader = (button: "Minimize" | "Maximize" | "Close") => {
-    setPdfReaderStatus(button);
+  const handleClickWindow = (
+    id: string,
+    action: "Minimize" | "Maximize" | "Close",
+  ) => {
+    setWindows({
+      ...windows,
+      [id]: {
+        ...windows[id],
+        status: action,
+      },
+    });
   };
+
+  const Icons = Object.keys(desktopIcons).map((key) => {
+    const icon = desktopIcons[key];
+    return (
+      <DesktopIcon
+        onClickContextMenuItem={(label) => {
+          setIsMenuOpen(false);
+          if (label === "Open") {
+            if (key === "resume") {
+              setWindows({
+                ...windows,
+                resume: {
+                  ...pdfReader,
+                  status: "Normal",
+                },
+              });
+            }
+          }
+        }}
+        key={key}
+        id={key}
+        img={icon.img}
+        title={icon.title}
+        position={icon.position}
+        onDoubleClicked={() => {
+          if (key === "resume") {
+            setWindows({
+              ...windows,
+              resume: {
+                ...pdfReader,
+                status: "Normal",
+              },
+            });
+          }
+        }}
+      />
+    );
+  });
 
   return (
     <div
@@ -132,31 +183,7 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         setContextMenuPosition({ left: e.clientX, top: e.clientY });
       }}
     >
-      {Object.keys(desktopIcons).map((key) => {
-        const icon = desktopIcons[key];
-        return (
-          <DesktopIcon
-            onClickContextMenuItem={(label) => {
-              setIsMenuOpen(false);
-              if (label === "Open") {
-                if (key === "resume") {
-                  setPdfReaderStatus("Normal");
-                }
-              }
-            }}
-            key={key}
-            id={key}
-            img={icon.img}
-            title={icon.title}
-            position={icon.position}
-            onDoubleClicked={() => {
-              if (key === "resume") {
-                setPdfReaderStatus("Normal");
-              }
-            }}
-          />
-        );
-      })}
+      {Icons}
 
       <ContextMenu
         isContextMenuOpen={isMenuOpen}
@@ -168,11 +195,11 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         }}
       />
 
-      {pdfReaderStatus !== "Close" && (
+      {pdfReader.status !== "Close" && pdfReader.status !== "Minimize" && (
         <PDFReader
-          position={pdfReaderPosition}
+          position={pdfReader.position}
           id="pdf-reader"
-          onClick={handleClickPDFReader}
+          onClick={(...args) => handleClickWindow("resume", ...args)}
         />
       )}
     </div>
