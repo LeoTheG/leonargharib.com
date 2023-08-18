@@ -15,7 +15,11 @@ export const PDFReader = ({ window, onClick }: IPDFReaderProps) => {
   );
 
   return (
-    <ApplicationWindow window={window} onClick={onClick}>
+    <ApplicationWindow
+      window={window}
+      onClick={onClick}
+      className="w-[900px] h-[700px]"
+    >
       <object
         data="/Leonar Gharib Resume.pdf#toolbar=0"
         type="application/pdf"

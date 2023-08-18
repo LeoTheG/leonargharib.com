@@ -33,8 +33,8 @@ export const ApplicationWindow: React.FC<
     <div
       className={clsx(
         className,
-        "flex flex-col w-[900px] max-w-[calc(100%-25px)]",
-        "h-[510px] md:h-[783px] max-h-[calc(100%-25px)] border-2 border-blue-700",
+        "flex flex-col max-w-[calc(100%-25px)]",
+        "max-h-[calc(100%-25px)] border-2 border-blue-700",
         "border-solid rounded-tr-lg rounded-tl-lg absolute cursor-move",
       )}
       style={{
