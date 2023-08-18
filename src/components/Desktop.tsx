@@ -8,9 +8,10 @@ import imgIconTextDocument from "assets/icons/TextDocument.png";
 import imgIconInternetExplorer from "assets/icons/InternetExplorer.png";
 import imgPDF from "assets/icons/PDF.png";
 import { DesktopIcon } from "components/DesktopIcon";
-import { ContextMenu, contextMenuItemsDesktop } from "./ContextMenu";
-import { PDFReader } from "./PDFReader";
+import { ContextMenu, contextMenuItemsDesktop } from "components/ContextMenu";
 import { useAppContext } from "App";
+import { TextDocument } from "components/TextDocument";
+import { PDFReader } from "components/PDFReader";
 
 const initialDesktopIcons = [
   {
@@ -54,6 +55,7 @@ const initialDesktopIcons = [
 export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   const { windows, setWindows } = useAppContext();
   const pdfReader = windows["resume"];
+  const textDocument = windows["text-document"];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({
@@ -108,10 +110,10 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         const delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
         const left = Math.round(item.left + delta.x);
         const top = Math.round(item.top + delta.y);
-        if (item.id === "pdf-reader") {
-          moveWindow(item.id, left, top);
-        } else {
+        if (item.isDesktopIcon) {
           moveIcon(item.id, left, top);
+        } else if (["resume", "text-document"].includes(item.id)) {
+          moveWindow(item.id, left, top);
         }
         return undefined;
       },
@@ -156,15 +158,16 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         title={icon.title}
         position={icon.position}
         onDoubleClicked={() => {
-          if (key === "resume") {
-            setWindows({
-              ...windows,
-              resume: {
-                ...pdfReader,
-                status: "Normal",
-              },
-            });
-          }
+          // only handling certain apps for now
+          if (!["resume", "text-document"].includes(key)) return;
+
+          setWindows({
+            ...windows,
+            [key]: {
+              ...windows[key],
+              status: "Normal",
+            },
+          });
         }}
       />
     );
@@ -197,11 +200,18 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
       {pdfReader.status !== "Close" && pdfReader.status !== "Minimize" && (
         <PDFReader
-          position={pdfReader.position}
-          id="pdf-reader"
-          onClick={(...args) => handleClickWindow("resume", ...args)}
+          onClick={(arg: any) => handleClickWindow(pdfReader.id, arg)}
+          window={pdfReader}
         />
       )}
+
+      {textDocument.status !== "Close" &&
+        textDocument.status !== "Minimize" && (
+          <TextDocument
+            window={textDocument}
+            onClick={(arg: any) => handleClickWindow(textDocument.id, arg)}
+          />
+        )}
     </div>
   );
 };

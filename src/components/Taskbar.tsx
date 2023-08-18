@@ -14,7 +14,7 @@ export const Taskbar = () => {
         }}
       >
         <StartButton />
-        <div className="flex py-[0.30rem]">
+        <div className="flex py-[0.30rem] gap-1">
           {Object.keys(windows).map((key) => {
             const window = windows[key];
             if (window.status === "Close") return null;

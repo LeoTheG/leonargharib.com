@@ -1,34 +1,13 @@
-import imgPDF from "assets/icons/PDF.png";
-import { CSSProperties } from "react";
-import { useDrag } from "react-dnd";
-import imgIconMinimize from "assets/icons/Minimize.png";
-import imgIconMaximize from "assets/icons/Maximize.png";
-import imgIconClose from "assets/icons/Close.png";
 import imgResume from "assets/Resume.png";
-import { BlueHorizontal } from "components/BlueHorizontal";
+import { ApplicationWindow } from "./ApplicationWindow";
+import { IWindow } from "./TaskbarWindow";
 
 interface IPDFReaderProps {
-  position: { top: number; left: number };
-  id: string;
+  window: IWindow;
   onClick: (button: "Minimize" | "Maximize" | "Close") => void;
 }
 
-export const PDFReader = ({
-  position: { top, left },
-  id,
-  onClick,
-}: IPDFReaderProps) => {
-  const [, drag] = useDrag(
-    () => ({
-      type: "application",
-      item: { id, left, top },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [id, left, top],
-  );
-
+export const PDFReader = ({ window, onClick }: IPDFReaderProps) => {
   const DownloadButton = (
     <a href="/Leonar Gharib Resume.pdf" download className="text-white">
       Download
@@ -36,41 +15,7 @@ export const PDFReader = ({
   );
 
   return (
-    <div
-      className="flex flex-col w-[900px] max-w-[calc(100%-25px)] h-[510px] md:h-[783px] max-h-[calc(100%-25px)] border-2 border-blue-700 border-solid rounded-tr-lg rounded-tl-lg"
-      style={{
-        ...dragStyle,
-        left,
-        top,
-        transform: "translate(0,0)",
-      }}
-    >
-      <BlueHorizontal>
-        <div className="flex justify-between w-full" ref={drag}>
-          <div className="flex flex-row gap-2">
-            <img src={imgPDF} alt="PDF" className="w-5 h-5" />
-            <div className="text-white text-[0.8rem]">
-              My Resume.pdf - Adobe Reader
-            </div>
-          </div>
-
-          <div className="flex flex-row gap-1 pr-1">
-            {[
-              { name: "Minimize", img: imgIconMinimize },
-              { name: "Maximize", img: imgIconMaximize },
-              { name: "Close", img: imgIconClose },
-            ].map(({ name, img }) => (
-              <img
-                key={name}
-                src={img}
-                alt={name}
-                className="w-5 h-5 hover:filter hover:brightness-125"
-                onClick={() => onClick(name as any)}
-              />
-            ))}
-          </div>
-        </div>
-      </BlueHorizontal>
+    <ApplicationWindow window={window} onClick={onClick}>
       <object
         data="/Leonar Gharib Resume.pdf#toolbar=0"
         type="application/pdf"
@@ -82,11 +27,6 @@ export const PDFReader = ({
           {DownloadButton}
         </div>
       </object>
-    </div>
+    </ApplicationWindow>
   );
-};
-
-const dragStyle: CSSProperties = {
-  position: "absolute",
-  cursor: "move",
 };

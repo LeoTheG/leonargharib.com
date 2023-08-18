@@ -35,7 +35,7 @@ const DesktopIconWithoutContextMenu = ({
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "desktop-icon",
-      item: { id, left, top },
+      item: { id, left, top, isDesktopIcon: true },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
