@@ -18,7 +18,7 @@ export const TextDocument = ({
         title: windowProp.title + " - Notepad",
       }}
       onClick={onClick}
-      className="w-[300px] md:w-[500px] h-[300px] md:h-[300px]"
+      className="w-[300px] md:w-[500px] h-[300px] md:h-[300px] overflow-hidden"
     >
       <div className="flex w-full bg-[#ECE9D8] h-6 gap-2">
         {options.map((option) => (

@@ -36,6 +36,7 @@ export const ApplicationWindow: React.FC<
         "flex flex-col max-w-[calc(100%-25px)]",
         "max-h-[calc(100%-25px)] border-4 border-blue-700",
         "border-solid rounded-tr-xl rounded-tl-xl absolute cursor-move",
+        "overflow-x-hidden",
       )}
       style={{
         left,
@@ -45,12 +46,20 @@ export const ApplicationWindow: React.FC<
     >
       <BlueHorizontal>
         <div className="flex justify-between w-full" ref={drag}>
-          <div className="flex flex-row gap-2">
+          <div
+            className="flex flex-row gap-2"
+            style={{
+              flex: "1 1 100px",
+              overflow: "hidden",
+            }}
+          >
             <img src={img} alt="PDF" className="w-5 h-5" />
-            <div className="text-white text-[0.8rem]">{title}</div>
+            <div className="text-white text-[0.8rem] overflow-x-hidden whitespace-nowrap overflow-ellipsis">
+              {title}
+            </div>
           </div>
 
-          <div className="flex flex-row gap-1 pr-1">
+          <div className="flex gap-1 pr-1 justify-end">
             {[
               { name: "Minimize", img: imgIconMinimize },
               { name: "Maximize", img: imgIconMaximize },
