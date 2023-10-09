@@ -7,6 +7,23 @@ import imgPDF from "assets/icons/PDF.png";
 import imgIconTextDocument from "assets/icons/TextDocument.png";
 import imgIconImage from "assets/icons/Image.png";
 import { IWindow } from "components/TaskbarWindow";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createHashRouter,
+} from "react-router-dom";
+import { PrivacyPolicy } from "components/PrivacyPolicy";
+
+const router = createHashRouter([
+  {
+    path: "/privacy-policy",
+    element: <PrivacyPolicy />,
+  },
+  {
+    path: "/",
+    element: <App />,
+  },
+]);
 
 const AppContext = createContext<{
   windows: {
@@ -73,8 +90,12 @@ function App() {
   );
 }
 
-export default App;
-
 export const useAppContext = () => {
   return useContext(AppContext);
 };
+
+function Router() {
+  return <RouterProvider router={router} />;
+}
+
+export default Router;
