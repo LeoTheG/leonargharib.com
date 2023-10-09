@@ -7,11 +7,7 @@ import imgPDF from "assets/icons/PDF.png";
 import imgIconTextDocument from "assets/icons/TextDocument.png";
 import imgIconImage from "assets/icons/Image.png";
 import { IWindow } from "components/TaskbarWindow";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  createHashRouter,
-} from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 import { PrivacyPolicy } from "components/PrivacyPolicy";
 
 const router = createHashRouter([
