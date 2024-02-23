@@ -1,6 +1,9 @@
 import { XYCoord, useDrop } from "react-dnd";
 import React, { PropsWithChildren, useCallback, useRef, useState } from "react";
 
+import imgIconImageApp from "assets/icons/Image App.png";
+import imgIconAIMessenger from "assets/icons/AI Messenger.png";
+import imgIconRunes from "assets/icons/Runes.jpg";
 import imgIconMyComputer from "assets/icons/MyComputer.png";
 import imgIconRecycle from "assets/icons/RecycleBin.png";
 import imgIconMyDocuments from "assets/icons/Documents.png";
@@ -57,6 +60,24 @@ const initialDesktopIcons = [
     title: "deeno",
     position: { top: 280, left: 10 },
     id: "picture",
+  },
+  {
+    img: imgIconRunes,
+    title: "Runes",
+    position: { top: 280, left: 100 },
+    id: "runes",
+  },
+  {
+    img: imgIconAIMessenger,
+    title: "AI Messenger",
+    position: { top: 370, left: 10 },
+    id: "ai-messenger",
+  },
+  {
+    img: imgIconImageApp,
+    title: "Image App",
+    position: { top: 370, left: 100 },
+    id: "image-app",
   },
 ];
 
@@ -151,6 +172,21 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
           setIsMenuOpen(false);
           if (label === "Open") {
             if (!isValidId(key)) return;
+
+            console.log({ key, windows });
+            if (key === "runes") {
+              window.open("https://runes-tcg.com");
+              return;
+            } else if (key === "ai-messenger") {
+              window.open(
+                "https://apps.apple.com/us/app/ai-messenger/id6472007820?platform=iphone",
+              );
+              return;
+            } else if (key === "image-app") {
+              window.open("https://imageapp.xyz");
+              return;
+            }
+
             setWindows({
               ...windows,
               [key]: {
@@ -166,6 +202,18 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         title={icon.title}
         position={icon.position}
         onDoubleClicked={() => {
+          if (key === "runes") {
+            window.open("https://runes-tcg.com");
+            return;
+          } else if (key === "ai-messenger") {
+            window.open(
+              "https://apps.apple.com/us/app/ai-messenger/id6472007820?platform=iphone",
+            );
+            return;
+          } else if (key === "image-app") {
+            window.open("https://imageapp.xyz");
+            return;
+          }
           // only handling certain apps for now
           if (!isValidId(key)) return;
 
@@ -232,4 +280,11 @@ export const Desktop: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 };
 
 const isValidId = (id: string) =>
-  ["resume", "text-document", "picture"].includes(id);
+  [
+    "resume",
+    "text-document",
+    "picture",
+    "runes",
+    "ai-messenger",
+    "image-app",
+  ].includes(id);
