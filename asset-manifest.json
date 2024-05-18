@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.47c7c2c7.css",
+    "main.js": "/static/js/main.2599dae2.js",
+    "static/js/787.b741e674.chunk.js": "/static/js/787.b741e674.chunk.js",
+    "static/media/xp_background.jpg": "/static/media/xp_background.17ce657ab1362be245f5.jpg",
+    "static/media/deeno.jpg": "/static/media/deeno.ddb1a132add53deb1d20.jpg",
+    "static/media/fish.jpg": "/static/media/fish.ee41d1a9b342be188cb9.jpg",
+    "static/media/Resume.png": "/static/media/Resume.f07fdc2dd9bd6cda6210.png",
+    "static/media/AI Messenger.png": "/static/media/AI Messenger.02e3bef1095f13b74a2e.png",
+    "static/media/windows_xp_icon.png": "/static/media/windows_xp_icon.f29712fa8bf755653f4c.png",
+    "static/media/MSN.png": "/static/media/MSN.75c9c6550250560fcf66.png",
+    "static/media/Runes.jpg": "/static/media/Runes.ea35cce1b1ad3f7a369d.jpg",
+    "static/media/Image App.png": "/static/media/Image App.d34148c823a2b53046d1.png",
+    "index.html": "/index.html",
+    "main.47c7c2c7.css.map": "/static/css/main.47c7c2c7.css.map",
+    "main.2599dae2.js.map": "/static/js/main.2599dae2.js.map",
+    "787.b741e674.chunk.js.map": "/static/js/787.b741e674.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.47c7c2c7.css",
+    "static/js/main.2599dae2.js"
+  ]
+}
